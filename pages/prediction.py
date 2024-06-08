@@ -1,41 +1,33 @@
-# Notes
-# do a "pip install streamlit" first 
-# to run on terminal issue this command
-# python -m streamlit run streamlit_test.py
-
 import streamlit as st
-import pickle
 
-# Load the trained Naive Bayes classifier from the saved file
-filename = 'pages/sentimentAnalyzerTest_Model.sav'
-with open(filename, 'rb') as file:
-    loaded_model = pickle.load(file)
 
-st.title("Flood Cause Predictor :umbrella:")
-st.subheader("Enter levels of different factors to determine the potential cause of the flood:")
+st.header('Simple Sentiment Analyzer App')
+st.subheader('This python code is implemented for Streamlit')
+        import streamlit as st
+        import pandas as pd
+        import pickle
+        from nltk.corpus import names
 
-# User inputs for different factors
-rainfall_input = st.slider("Rainfall Level (mm): ", 0, 1000)
-river_overflow_input = st.slider("River Overflow Level: ", 0, 100)
-drainage_quality_input = st.slider("Drainage System Quality (1-10): ", 1, 10)
-dam_condition_input = st.slider("Dam Condition (1-10): ", 1, 10)
+        st.title("A Simple Sentiment Analyzer")
+        message = st.text_input("Tell me what you feel today: ")
 
-# Function to make a prediction
-def predict_flood_cause(rainfall, river_overflow, drainage_quality, dam_condition):
-    if rainfall == 0 and river_overflow == 0 and drainage_quality == 1 and dam_condition == 1:
-        return "No significant factors entered"
-    else:
-        features = {
-            'rainfall': rainfall,
-            'river_overflow': river_overflow,
-            'drainage_quality': drainage_quality,
-            'dam_condition': dam_condition
-        }
-        prediction = loaded_model.classify(features)
-        return prediction
+        # Load the trained Naive Bayes classifier from the saved file
+        filename = 'pages/sentimentAnalyzerTest_model.sav'
+        loaded_model = pickle.load(open(filename, 'rb'))
 
-# Display button and result
-if st.button('Predict'):
-    cause_of_flood = predict_flood_cause(rainfall_input, river_overflow_input, drainage_quality_input, dam_condition_input)
-    st.text("The predicted cause of the flood is:")
-    st.text_area(label="", value=cause_of_flood, height=100)
+        # Define features (words) and their corresponding labels (positive/negative)
+        def word_features(words):
+            return dict([(word, True) for word in words])
+
+        message_tone = loaded_model.classify(word_features(message.split()))
+
+        # make a function for your button click
+
+        def sayFeeling():
+            # Classify the sentiment
+            if message_tone == 'positive':
+                st.write("this is :smile:")
+            else:
+                st.write("this is :disappointed:")
+                
+        st.button('Say it', on_click=sayFeeling)
