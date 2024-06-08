@@ -1,18 +1,13 @@
-# Notes
-# do a "pip install streamlit" first 
-# to run on terminal issue this command
-# python -m streamlit run streamlit_test.py
 
-import streamlit as st
-import pickle
+
 import streamlit as st
 import pandas as pd
 import pickle
 from nltk.corpus import names
 
 # Load the trained Naive Bayes classifier from the saved file
-filename = 'pages/sentimentAnalyzerTest_Model.sav'
-loaded_model = pickle.load(open(filename, 'rb'))
+file = 'pages/sentimentAnalyzerTest_Model.sav'
+loaded_model = pickle.load(open(file, 'rb'))
 
 st.title("Flood Cause Predictor :umbrella:")
 st.subheader("Enter levels of different factors to determine the potential cause of the flood:")
