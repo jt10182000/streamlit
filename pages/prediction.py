@@ -5,6 +5,10 @@
 
 import streamlit as st
 import pickle
+import streamlit as st
+import pandas as pd
+import pickle
+from nltk.corpus import names
 
 # Load the trained Naive Bayes classifier from the saved file
 filename = 'pages/sentimentAnalyzerTest_Model.sav'
