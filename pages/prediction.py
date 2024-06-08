@@ -1,33 +1,40 @@
-#Notes
+# Notes
 # do a "pip install streamlit" first 
-#to run on terminal issue this command
+# to run on terminal issue this command
 # python -m streamlit run streamlit_test.py
 
 import streamlit as st
-import pandas as pd
 import pickle
-from nltk.corpus import names
 
 # Load the trained Naive Bayes classifier from the saved file
-filename = 'pages/crop_recom_model.sav'
+filename = 'pages/sentimentAnalyzerTest_Model.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 
-# # Use the model to make predictions
-@st.cache_data 
-def predict_crop():
-    st.text("The crop is " + crop_name)
-    return
-           
-st.title("Crop Recommendation Predictor :smile:")
-st.subheader("Enter a set of NPK levels to determine what crop best fits:")
-n_input = st.slider("Nitrogen: ",0,500)
-p_input = st.slider("Phosphorus: ",0,500)
-k_input = st.slider("Potassium: ",0,500)
-if n_input == 0 & p_input == 0 & k_input == 0:
-    crop_name = ""
-else:
-    crop_name = loaded_model.predict([[pd.to_numeric(n_input),pd.to_numeric(p_input),pd.to_numeric(k_input)]])
+st.title("Flood Cause Predictor :umbrella:")
+st.subheader("Enter levels of different factors to determine the potential cause of the flood:")
 
-st.text("The crop suitable for this NPK level:")
-st.text_area(label ="",value=crop_name, height =100)
-# st.button('Predict', on_click=predict_crop
+# User inputs for different factors
+rainfall_input = st.slider("Rainfall Level (mm): ", 0, 1000)
+river_overflow_input = st.slider("River Overflow Level: ", 0, 100)
+drainage_quality_input = st.slider("Drainage System Quality (1-10): ", 1, 10)
+dam_condition_input = st.slider("Dam Condition (1-10): ", 1, 10)
+
+# Function to make a prediction
+def predict_flood_cause(rainfall, river_overflow, drainage_quality, dam_condition):
+    if rainfall == 0 and river_overflow == 0 and drainage_quality == 1 and dam_condition == 1:
+        return "No significant factors entered"
+    else:
+        features = {
+            'rainfall': rainfall,
+            'river_overflow': river_overflow,
+            'drainage_quality': drainage_quality,
+            'dam_condition': dam_condition
+        }
+        prediction = loaded_model.classify(features)
+        return prediction
+
+# Display button and result
+if st.button('Predict'):
+    cause_of_flood = predict_flood_cause(rainfall_input, river_overflow_input, drainage_quality_input, dam_condition_input)
+    st.text("The predicted cause of the flood is:")
+    st.text_area(label="", value=cause_of_flood, height=100)
