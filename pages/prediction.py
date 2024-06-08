@@ -7,9 +7,12 @@ import streamlit as st
 import pandas as pd
 import pickle
 
+# Load the trained Naive Bayes classifier from the saved filee
+
 # Load the trained Naive Bayes classifier from the saved file
 filename = 'pages/sentimentAnalyzerTest_Model.sav'
-loaded_model = pickle.load(open(filename, 'rb'))
+with open(filename, 'rb') as file:
+    loaded_model = pickle.load(file)
 
 st.title("Flood Cause Predictor :umbrella:")
 st.subheader("Enter levels of different factors to determine the potential cause of the flood:")
