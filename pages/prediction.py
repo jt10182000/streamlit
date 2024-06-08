@@ -23,11 +23,11 @@ message_tone = loaded_model.classify(word_features(message.split()))
 
         # make a function for your button click
 
-        def sayFeeling():
+def sayFeeling():
             # Classify the sentiment
-            if message_tone == 'positive':
-                st.write("this is :smile:")
-            else:
-                st.write("this is :disappointed:")
+        if message_tone == 'positive':
+           st.write("this is :smile:")
+        else:
+           st.write("this is :disappointed:")
                 
-        st.button('Say it', on_click=sayFeeling)
+st.button('Say it', on_click=sayFeeling)
