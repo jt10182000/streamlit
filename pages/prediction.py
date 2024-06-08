@@ -6,7 +6,7 @@ import pickle
 from nltk.corpus import names
 
 # Load the trained Naive Bayes classifier from the saved file
-file = 'pages/sentimentAnalyzerTest_Model.sav'
+file = 'pages/sentimentAnalyzerTest_model.sav'
 loaded_model = pickle.load(open(file, 'rb'))
 
 st.title("Flood Cause Predictor :umbrella:")
