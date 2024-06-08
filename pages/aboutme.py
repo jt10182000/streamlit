@@ -36,7 +36,7 @@ st.write("**Education:** Currently studying at CARLOS HILADO MEMORIAL STATE UNIV
 st.write("**Year:** 3rd year Bachelor of Science in Information Systems Student")
 st.write("**Location:** Barangay Dos Hermanas Talisay City")
 
-with st.expander("Who I am 10 years From now??"):
+with st.expander("Who am I 10 years From now??"):
     st.markdown("""
     
     #
